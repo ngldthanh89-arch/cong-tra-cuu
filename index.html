@@ -344,13 +344,19 @@ document.addEventListener('DOMContentLoaded', loadDocumentsFromCloud);
         // Hàm đếm lượt truy cập tự động
 async function updateVisitorCount() {
     try {
-        const response = await fetch('https://api.countapi.xyz/hit/cong-tra-cuu-duong-thuy-ngldthanh89/visits');
+        const key = "congtracuuduongthuy_ngldthanh89";
+        const response = await fetch(`https://api.counterapi.dev/v1/${key}/up`);
         const data = await response.json();
         
-        if (data && data.value) {
-            const totalVisits = data.value + 1999;
-            document.getElementById('visitCount').innerText = totalVisits.toLocaleString('vi-VN');
+        if (!data || !data.count) {
+            await fetch(`https://api.counterapi.dev/v1/${key}/create`);
+            document.getElementById('visitCount').innerText = "2.000";
+            return;
         }
+
+        const totalVisits = data.count + 1999;
+        document.getElementById('visitCount').innerText = totalVisits.toLocaleString('vi-VN');
+
     } catch (error) {
         console.log("Không thể tải lượt truy cập:", error);
         document.getElementById('visitCount').innerText = "2.000";
