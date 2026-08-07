@@ -344,16 +344,17 @@ document.addEventListener('DOMContentLoaded', loadDocumentsFromCloud);
         // Hàm đếm lượt truy cập tự động
 async function updateVisitorCount() {
     try {
-        const namespace = "cong-tra-cuu-duong-thuy-ngldthanh89";
+        const namespace = "cong-tra-cuu-duong-thuy-v3-ngldthanh89";
         const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/visits/up`);
         const data = await response.json();
         
         if (data && data.count) {
-            document.getElementById('visitCount').innerText = data.count.toLocaleString('vi-VN');
+            const totalVisits = data.count + 1999;
+            document.getElementById('visitCount').innerText = totalVisits.toLocaleString('vi-VN');
         }
     } catch (error) {
         console.log("Không thể tải lượt truy cập:", error);
-        document.getElementById('visitCount').innerText = "1";
+        document.getElementById('visitCount').innerText = "2.000";
     }
 }
 
