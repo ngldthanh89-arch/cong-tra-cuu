@@ -342,20 +342,28 @@ document.addEventListener('DOMContentLoaded', loadDocumentsFromCloud);
         // Initialize Render
         filterData();
         // Hàm đếm lượt truy cập tự động
-function updateVisitorCount() {
+async function updateVisitorCount() {
     try {
-        let currentVisits = localStorage.getItem('visitor_count');
+        const dbUrl = "https://thanhg-1df17-default-rtdb.asia-southeast1.firebasedatabase.app/visits.json";
         
-        if (!currentVisits) {
-            currentVisits = 2000;
-        } else {
-            currentVisits = parseInt(currentVisits) + 1;
-        }
+        // 1. Đọc số lượt xem hiện tại từ Firebase
+        const res = await fetch(dbUrl);
+        let count = await res.json();
         
-        localStorage.setItem('visitor_count', currentVisits);
-        document.getElementById('visitCount').innerText = Number(currentVisits).toLocaleString('vi-VN');
-    } catch (error) {
-        console.log("Lỗi đếm lượt truy cập:", error);
+        // 2. Nếu chưa có dữ liệu thì bắt đầu từ 2001, có rồi thì cộng 1
+        count = count ? count + 1 : 2001;
+        
+        // 3. Gửi số mới lên Firebase để đồng bộ mọi thiết bị
+        await fetch(dbUrl, { 
+            method: 'PUT', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(count) 
+        });
+        
+        // 4. Hiển thị ra màn hình chuẩn định dạng (2.001, 2.002,...)
+        document.getElementById('visitCount').innerText = Number(count).toLocaleString('vi-VN');
+    } catch (e) {
+        console.log("Lỗi Firebase:", e);
         document.getElementById('visitCount').innerText = "2.000";
     }
 }
