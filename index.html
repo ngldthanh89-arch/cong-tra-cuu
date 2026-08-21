@@ -18,22 +18,6 @@
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
-    <script>
-    (function bảoVệTrangWeb() {
-        // === BẠN ĐỔI MẬT KHẨU TẠI ĐÂY ===
-        const matKhauDung = "1234567890"; 
-
-        // Hỏi mật khẩu từ người dùng
-        let matKhauNhap = prompt("Trang web được bảo mật. Bản quyền thuộc về THANHGIAU. Vi phạm bản quyền sở hữu đồng nghĩa vi phạm PHÁP LUẬT. Vui lòng nhập mật khẩu để truy cập:");
-
-        if (matKhauNhap !== matKhauDung) {
-            alert("Mật khẩu không chính xác! Bạn không có quyền truy cập.");
-            // Xóa sạch nội dung trang web nếu nhập sai
-            document.write("<h1 style='text-align:center; margin-top:50px; color:red; font-family:sans-serif;'>⚠️ Sai mật khẩu! Bạn không thể xem trang web này.</h1>");
-            window.stop(); // Dừng tải trang
-        }
-    })();
-</script>
 
     <!-- Header -->
     <header class="bg-blue-800 text-white shadow-md sticky top-0 z-30">
